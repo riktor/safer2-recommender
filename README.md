@@ -5,7 +5,7 @@ This is the implementation of Smoothing Approach for Efficient Risk-averse Recom
 @article{togashi2023safe,
  title={Safe Collaborative Filtering},
  author={Togashi, Riku and Oka, Tatsushi and Ohsaka, Naoto and Morimura, Tetsuro},
- journal={arXiv preprint arXiv:},
+ journal={https://arxiv.org/abs/2306.05292},
  year={2023}
 }
 ```
