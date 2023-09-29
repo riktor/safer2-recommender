@@ -70,14 +70,23 @@ cc_binary(
 )
 
 
-load("@com_grail_bazel_compdb//:defs.bzl", "compilation_database")
-load("@com_grail_bazel_output_base_util//:defs.bzl", "OUTPUT_BASE")
+load("@hedron_compile_commands//:refresh_compile_commands.bzl", "refresh_compile_commands")
 
-compilation_database(
-    name = "frecsys_compdb",
+refresh_compile_commands(
+    name = "refresh_compile_commands",
+
+    # Specify the targets of interest.
+    # For example, specify a dict of targets and any flags required to build.
     targets = [
-        "frecsys",
-        "run_model",
-    ],
-    output_base = OUTPUT_BASE,
+      "frecsys", "run_model",
+    ] + [test_filename.split("/")[-1].split('.')[0] for test_filename in glob(["tests/*_test.cc"])],
+    #{
+    #  "//:my_output_1": "--important_flag1 --important_flag2=true",
+    #  "//:my_output_2": "",
+    #},
+    # No need to add flags already in .bazelrc. They're automatically picked up.
+    # If you don't need flags, a list of targets is also okay, as is a single target string.
+    # Wildcard patterns, like //... for everything, *are* allowed here, just like a build.
+      # As are additional targets (+) and subtractions (-), like in bazel query https://docs.bazel.build/versions/main/query.html#expressions
+    # And if you're working on a header-only library, specify a test or binary target that compiles it.
 )
